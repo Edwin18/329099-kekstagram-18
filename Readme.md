@@ -1,8 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Bodik Malomuzh](https://up.htmlacademy.ru/javascript/18/user/329099).
-* Наставник: `Неизвестно`.
-
+* Наставник: [Сергей Рубец](https://up.htmlacademy.ru/javascript/18/user/41580).
 ---
 
 _Не удаляйте и не обращайте внимание на файлы:_<br>
