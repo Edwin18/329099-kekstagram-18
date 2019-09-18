@@ -51,9 +51,9 @@ var getPhotoTemplate = function (photo) {
 
 var renderPhotos = function (minLikes, maxLikes, commentsCount, photoCount) {
   var fragment = document.createDocumentFragment();
+  var object = getPhotoObject(minLikes, maxLikes, commentsCount, photoCount);
 
   for (var i = 0; i < photoCount; i++) {
-    var object = getPhotoObject(minLikes, maxLikes, commentsCount, photoCount);
     var template = getPhotoTemplate(object[i]);
     fragment.appendChild(template);
   }
