@@ -1,7 +1,6 @@
 'use strict';
 
-// var COMMENTS_ARRAY = ['Всё отлично!', 'В целом всё неплохо. Но не всё.', 'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.', 'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.', 'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.', 'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'];
-var COMMENTS_COUNT = 2;
+var COMMENTS_ARRAY = ['Всё отлично!', 'В целом всё неплохо. Но не всё.', 'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.', 'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.', 'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.', 'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'];
 var MIN_LIKES = 15;
 var MAX_LIKES = 250;
 var PHOTO_COUNT = 25;
@@ -24,16 +23,15 @@ var getRandomNumber = function (min, max) {
 //   return tempComments;
 // };
 
-var getPhotoObject = function (minLikes, maxLikes, commentsCount, photoCount) {
+var getPhotoObjects = function (minLikes, maxLikes, commentsArray, photoCount) {
   var photoSetup = [];
 
   for (var i = 0; i < photoCount; i++) {
     var tempObject = {};
     tempObject.url = 'photos/' + (i + 1) + '.jpg';
     tempObject.likes = getRandomNumber(minLikes, maxLikes);
-    tempObject.comments = getRandomNumber(1, commentsCount);
+    tempObject.comments = getRandomNumber(1, commentsArray.length);
     photoSetup.push(tempObject);
-    tempObject = {};
   }
 
   return photoSetup;
@@ -49,9 +47,9 @@ var getPhotoTemplate = function (photo) {
   return photoElement;
 };
 
-var renderPhotos = function (minLikes, maxLikes, commentsCount, photoCount) {
+var renderPhotos = function (minLikes, maxLikes, commentsArray, photoCount) {
   var fragment = document.createDocumentFragment();
-  var object = getPhotoObject(minLikes, maxLikes, commentsCount, photoCount);
+  var object = getPhotoObjects(minLikes, maxLikes, commentsArray, photoCount);
 
   for (var i = 0; i < photoCount; i++) {
     var template = getPhotoTemplate(object[i]);
@@ -61,4 +59,4 @@ var renderPhotos = function (minLikes, maxLikes, commentsCount, photoCount) {
   pictureElement.appendChild(fragment);
 };
 
-renderPhotos(MIN_LIKES, MAX_LIKES, COMMENTS_COUNT, PHOTO_COUNT);
+renderPhotos(MIN_LIKES, MAX_LIKES, COMMENTS_ARRAY, PHOTO_COUNT);
