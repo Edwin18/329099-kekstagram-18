@@ -13,7 +13,7 @@ var AVATAR_SIZE = 35;
 var pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 var pictureElement = document.querySelector('.pictures');
 var pictureBig = document.querySelector('.big-picture');
-var photoObjects = [];
+var photos = [];
 
 var socialCommentCount = document.querySelector('.social__comment-count');
 var commentsLoader = document.querySelector('.comments-loader');
@@ -47,7 +47,7 @@ var getRandomComments = function () {
   return tempComments;
 };
 
-var getPhotoObject = function (count) {
+var getPhoto = function (count) {
   return {
     url: 'photos/' + (count + 1) + '.jpg',
     likes: getRandomNumber(LIKES.MIN, LIKES.MAX),
@@ -59,10 +59,10 @@ var getPhotoObject = function (count) {
 var getPhotos = function (photoCount) {
 
   for (var i = 0; i < photoCount; i++) {
-    photoObjects.push(getPhotoObject(i));
+    photos.push(getPhoto(i));
   }
 
-  return photoObjects;
+  return photos;
 };
 
 var getPhotoElement = function (photo) {
@@ -87,11 +87,11 @@ var renderPhotos = function (photoCount) {
   pictureElement.appendChild(fragment);
 };
 
-var renderPictureBig = function (element) {
-  element.querySelector('.big-picture__img img').src = photoObjects[0].url;
-  element.querySelector('.likes-count').textContent = photoObjects[0].likes;
-  element.querySelector('.comments-count').textContent = photoObjects[0].comments.length;
-  element.querySelector('.social__caption').textContent = photoObjects[0].description;
+var renderPictureBig = function (element, data) {
+  element.querySelector('.big-picture__img img').src = data.url;
+  element.querySelector('.likes-count').textContent = data.likes;
+  element.querySelector('.comments-count').textContent = data.comments.length;
+  element.querySelector('.social__caption').textContent = data.description;
 };
 
 var getCommentElement = function () {
@@ -113,13 +113,13 @@ var getCommentElement = function () {
   return containerElement;
 };
 
-var renderComments = function (avatarCount) {
+var renderComments = function (avatarCount, data) {
   var fragment = document.createDocumentFragment();
 
-  for (var i = 0; i < photoObjects[0].comments.length; i++) {
+  for (var i = 0; i < data.comments.length; i++) {
     var commentElement = getCommentElement();
     commentElement.querySelector('.social__picture').src = 'img/avatar-' + getRandomNumber(1, avatarCount) + '.svg';
-    commentElement.querySelector('.social__text').textContent = photoObjects[0].comments[i];
+    commentElement.querySelector('.social__text').textContent = data.comments[i];
     fragment.appendChild(commentElement);
   }
 
@@ -130,5 +130,5 @@ renderPhotos(PHOTO_COUNT);
 showElement(pictureBig);
 hideElement(socialCommentCount);
 hideElement(commentsLoader);
-renderPictureBig(pictureBig);
-renderComments(AVATAR_COUNT);
+renderPictureBig(pictureBig, photos[0]);
+renderComments(AVATAR_COUNT, photos[0]);
