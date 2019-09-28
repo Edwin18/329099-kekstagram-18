@@ -147,9 +147,9 @@ var removeEffects = function () {
   img.removeAttribute('class');
 };
 
-effectsList.addEventListener('change', function (evt) {
+var renderEffects = function (evt) {
   var eventTarget = evt.target;
-  removeEffects();
+
   if (!(eventTarget.value === 'none')) {
     img.classList.add('effects__preview--' + eventTarget.value);
     if (!(effectsBar.classList.contains === 'hiden')) {
@@ -158,14 +158,9 @@ effectsList.addEventListener('change', function (evt) {
   } else {
     hideElement(effectsBar);
   }
-});
+};
 
-uploadFiles.addEventListener('change', function () {
-  showElement(photoForm);
-  hideElement(effectsBar);
-});
-
-hashtags.addEventListener('change', function () {
+var hashtagsValidation = function () {
   var tempArray = hashtags.value.split(' ');
 
   for (var i = 0; i < tempArray.length; i++) {
@@ -175,4 +170,16 @@ hashtags.addEventListener('change', function () {
       hashtags.setCustomValidity('');
     }
   }
+};
+
+effectsList.addEventListener('change', function (evt) {
+  removeEffects();
+  renderEffects(evt);
 });
+
+uploadFiles.addEventListener('change', function () {
+  showElement(photoForm);
+  hideElement(effectsBar);
+});
+
+hashtags.addEventListener('change', hashtagsValidation);
