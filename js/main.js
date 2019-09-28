@@ -135,6 +135,7 @@ renderPhotos(PHOTO_COUNT);
 // renderComments(AVATAR_COUNT, photos[0]);
 
 // 8. Личный проект: подробности
+var HASHTAGS_MAX = 20;
 
 var uploadFiles = document.querySelector('#upload-file');
 var photoForm = document.querySelector('.img-upload__overlay');
@@ -164,7 +165,7 @@ var hashtagsValidation = function () {
   var tempArray = hashtags.value.split(' ');
 
   for (var i = 0; i < tempArray.length; i++) {
-    if (tempArray[i].length >= 20) {
+    if (tempArray[i].length >= HASHTAGS_MAX) {
       hashtags.setCustomValidity('Ваш хеш-тег' + tempArray[i] + ' длинее 20 символов, укоротите)');
     } else {
       hashtags.setCustomValidity('');
