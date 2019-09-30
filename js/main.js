@@ -12,7 +12,6 @@ var PHOTO_COUNT = 25;
 
 var pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 var pictureElement = document.querySelector('.pictures');
-// var pictureBig = document.querySelector('.big-picture');
 var photos = [];
 
 // var socialCommentCount = document.querySelector('.social__comment-count');
@@ -86,13 +85,6 @@ var renderPhotos = function (photoCount) {
 
   pictureElement.appendChild(fragment);
 };
-
-// var renderPictureBig = function (element, data) {
-//   element.querySelector('.big-picture__img img').src = data.url;
-//   element.querySelector('.likes-count').textContent = data.likes;
-//   element.querySelector('.comments-count').textContent = data.comments.length;
-//   element.querySelector('.social__caption').textContent = data.description;
-// };
 
 // var getCommentElement = function () {
 //   var containerElement = document.createElement('li');
@@ -184,3 +176,58 @@ uploadFiles.addEventListener('change', function () {
 });
 
 hashtags.addEventListener('change', hashtagsValidation);
+
+// 9. Личный проект: доверяй, но проверяй
+
+var COMMENTS_MAX = 140;
+var ENTER_KEYCODE = 13;
+var ESC_KEYCODE = 27;
+
+var pictureBigElement = document.querySelector('.big-picture');
+var pictureCloseBtn = pictureBigElement.querySelector('#picture-cancel');
+var commentsElement = photoForm.querySelector('.text__description');
+
+var renderPictureBig = function (element, data) {
+  element.querySelector('.big-picture__img img').src = data.src;
+};
+
+var commentsValidation = function () {
+  if (commentsElement.value.length >= COMMENTS_MAX) {
+    commentsElement.setCustomValidity('Слишком длинный комментарий');
+  } else {
+    commentsElement.setCustomValidity('');
+  }
+};
+
+pictureElement.addEventListener('click', function (evt) {
+  var picture = evt.target;
+
+  if (picture.tagName === 'IMG') {
+    renderPictureBig(pictureBigElement, picture);
+    showElement(pictureBigElement);
+  }
+});
+
+pictureElement.addEventListener('keydown', function (evt) {
+  var picture = evt.target;
+
+  if (evt.keyCode === ENTER_KEYCODE) {
+    if (picture.tagName === 'A') {
+      var pictureImg = picture.querySelector('img');
+      renderPictureBig(pictureBigElement, pictureImg);
+      showElement(pictureBigElement);
+    }
+  }
+});
+
+pictureCloseBtn.addEventListener('click', function () {
+  hideElement(pictureBigElement);
+});
+
+document.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    hideElement(pictureBigElement);
+  }
+});
+
+commentsElement.addEventListener('change', commentsValidation);
