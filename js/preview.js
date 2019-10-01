@@ -1,9 +1,6 @@
 'use strict';
 
 (function () {
-  var ENTER_KEYCODE = 13;
-  var ESC_KEYCODE = 27;
-
   var pictureElement = document.querySelector('.pictures');
   var pictureBigElement = document.querySelector('.big-picture');
   var сloseBtnElement = pictureBigElement.querySelector('#picture-cancel');
@@ -25,7 +22,7 @@
   pictureElement.addEventListener('keydown', function (evt) {
     var picture = evt.target;
 
-    if (evt.keyCode === ENTER_KEYCODE) {
+    if (evt.keyCode === window.constants.KEY_CODE.ENTER) {
       if (picture.tagName === 'A') {
         var pictureImg = picture.querySelector('img');
         renderPictureBig(pictureBigElement, pictureImg);
@@ -39,7 +36,7 @@
   });
 
   document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === ESC_KEYCODE) {
+    if (evt.keyCode === window.constants.KEY_CODE.ESC) {
       window.util.hideElement(pictureBigElement);
     }
   });
