@@ -37,22 +37,23 @@
   var hashtagsValidation = function () {
     var tempArray = hashtagsElement.value.split(' ');
 
-    if (!(tempArray.length > HASHTAGS_MAX_LENGTH)) {
-      for (var i = 0; i < tempArray.length; i++) {
-        if (tempArray[i].match(HASHTAGS_REGEXP) === null) {
-          hashtagsElement.setCustomValidity('Вы забыли поставить хеш-тег #');
+    if (tempArray.length > HASHTAGS_MAX_LENGTH) {
+      hashtagsElement.setCustomValidity('Максимум 5 хеш-тегов');
+      return;
+    }
+
+    for (var i = 0; i < tempArray.length; i++) {
+      if (tempArray[i].match(HASHTAGS_REGEXP) === null) {
+        hashtagsElement.setCustomValidity('Вы забыли поставить хеш-тег #');
+      } else {
+        hashtagsElement.setCustomValidity('');
+
+        if (tempArray[i].length >= HASHTAGS_MAX) {
+          hashtagsElement.setCustomValidity('Ваш хеш-тег' + tempArray[i] + ' длинее 20 символов, укоротите)');
         } else {
           hashtagsElement.setCustomValidity('');
-
-          if (tempArray[i].length >= HASHTAGS_MAX) {
-            hashtagsElement.setCustomValidity('Ваш хеш-тег' + tempArray[i] + ' длинее 20 символов, укоротите)');
-          } else {
-            hashtagsElement.setCustomValidity('');
-          }
         }
       }
-    } else {
-      hashtagsElement.setCustomValidity('Максимум 5 хеш-тегов');
     }
   };
 
