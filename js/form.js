@@ -10,29 +10,7 @@
   var photoFormElement = document.querySelector('.img-upload__overlay');
   var commentsElement = photoFormElement.querySelector('.text__description');
   var hashtagsElement = photoFormElement.querySelector('.text__hashtags');
-  var imgElement = photoFormElement.querySelector('.img-upload__preview img');
   var effectsBarElement = photoFormElement.querySelector('.img-upload__effect-level');
-  var effectsListElement = photoFormElement.querySelector('.effects__list');
-
-  var removeEffects = function () {
-    if (!(imgElement.className.match('effects__preview--') === null)) {
-      var oldEffects = imgElement.className.match('effects__preview--').input;
-      imgElement.classList.remove(oldEffects);
-    }
-  };
-
-  var renderEffects = function (evt) {
-    var eventTarget = evt.target;
-
-    if (!(eventTarget.value === 'none')) {
-      imgElement.classList.add('effects__preview--' + eventTarget.value);
-      if (!(effectsBarElement.classList.contains === 'hiden')) {
-        window.util.showElement(effectsBarElement);
-      }
-    } else {
-      window.util.hideElement(effectsBarElement);
-    }
-  };
 
   var hashtagsValidation = function () {
     var tempArray = hashtagsElement.value.split(' ');
@@ -68,11 +46,6 @@
   uploadFilesElement.addEventListener('change', function () {
     window.util.showElement(photoFormElement);
     window.util.hideElement(effectsBarElement);
-  });
-
-  effectsListElement.addEventListener('change', function (evt) {
-    removeEffects();
-    renderEffects(evt);
   });
 
   hashtagsElement.addEventListener('input', hashtagsValidation);
