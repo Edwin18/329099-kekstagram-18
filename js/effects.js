@@ -8,6 +8,15 @@
     {CLASS_NAME: 'phobos', FILTER_NAME: 'blur', MIN: 0, MAX: 3, UNITS: 'px'},
     {CLASS_NAME: 'heat', FILTER_NAME: 'brightness', MIN: 1, MAX: 3, UNITS: ''}
   ];
+  var LEFT_POSITION = {
+    MIN: 0,
+    MAX: 100
+  };
+  var VALUE = {
+    MIN: 0,
+    MAX: 100
+  };
+  var PERCENT = 100;
 
   var imgElement = document.querySelector('.img-upload__preview img');
   var effectsListElement = document.querySelector('.effects__list');
@@ -17,20 +26,26 @@
   var effectsLevelDepth = effectsContainer.querySelector('.effect-level__depth');
   var effectsValue = effectsContainer.querySelector('.effect-level__value');
 
-  var getEffect = function () {
-    var temp;
+  var getFilter = function () {
+    var effect;
 
     for (var i = 0; i < EFFECTS.length; i++) {
       if (imgElement.className.match(EFFECTS[i].CLASS_NAME)) {
-        temp = EFFECTS[i];
+        effect = EFFECTS[i];
       }
     }
 
-    return temp;
+    return effect;
+  };
+
+  var getCurrentFilter = function (currentFilter) {
+    var pureProportion = getPureProportion(currentFilter.MAX, currentFilter.MIN) * effectsValue.value;
+    var firstFilterValue = currentFilter.MIN + pureProportion;
+    return currentFilter.FILTER_NAME + '(' + firstFilterValue + currentFilter.UNITS + ')';
   };
 
   var getPureProportion = function (maxValue, minValue) {
-    return (maxValue - minValue) / 100;
+    return (maxValue - minValue) / PERCENT;
   };
 
   effectsHandler.addEventListener('mousedown', function (evt) {
@@ -38,9 +53,9 @@
 
     var startCoords = evt.clientX;
     var startCoordsHangler = effectsHandler.offsetLeft;
-    var lineWidth = effectsBar.offsetWidth;
-    var pureProportion = lineWidth / 100;
-    var currentEffect = getEffect();
+    var sliderWidth = effectsBar.offsetWidth;
+    var pureProportion = sliderWidth / PERCENT;
+    var currentFilter = getFilter();
 
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
@@ -52,24 +67,18 @@
       effectsLevelDepth.style.width = effectsValue.value + '%';
 
       if (effectsHandler.offsetLeft <= 0) {
-        effectsHandler.style.left = 0;
-        effectsValue.value = 0;
-        effectsLevelDepth.style.width = 0;
+        effectsHandler.style.left = LEFT_POSITION.MIN;
+        effectsValue.value = VALUE.MIN;
+        effectsLevelDepth.style.width = LEFT_POSITION.MIN;
       }
 
-      if (effectsHandler.offsetLeft > lineWidth) {
-        effectsHandler.style.left = lineWidth + 'px';
-        effectsValue.value = 100;
-        effectsLevelDepth.style.width = '100%';
+      if (effectsHandler.offsetLeft > sliderWidth) {
+        effectsHandler.style.left = sliderWidth + 'px';
+        effectsValue.value = VALUE.MAX;
+        effectsLevelDepth.style.width = LEFT_POSITION.MAX + '%';
       }
 
-      imgElement.style.filter =
-        currentEffect.FILTER_NAME +
-        '(' +
-        (currentEffect.MIN +
-        (getPureProportion(currentEffect.MAX, currentEffect.MIN) * effectsValue.value)) +
-        currentEffect.UNITS +
-        ')';
+      imgElement.style.filter = getCurrentFilter(currentFilter);
     };
 
     var onMouseUp = function (upEvt) {
@@ -85,9 +94,9 @@
 
   var removeEffects = function () {
     imgElement.style.filter = null;
-    effectsHandler.style.left = '100%';
-    effectsLevelDepth.style.width = '100%';
-    effectsValue.value = 100;
+    effectsHandler.style.left = LEFT_POSITION.MAX + '%';
+    effectsValue.value = VALUE.MAX;
+    effectsLevelDepth.style.width = LEFT_POSITION.MAX + '%';
 
     if (!(imgElement.className.match('effects__preview--') === null)) {
       var oldEffects = imgElement.className.match('effects__preview--').input;
