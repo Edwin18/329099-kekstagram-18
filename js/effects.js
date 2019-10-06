@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var EFFECTS = [
+  var FILTERS = [
     {CLASS_NAME: 'chrome', FILTER_NAME: 'grayscale', MIN: 0, MAX: 1, UNITS: ''},
     {CLASS_NAME: 'sepia', FILTER_NAME: 'sepia', MIN: 0, MAX: 1, UNITS: ''},
     {CLASS_NAME: 'marvin', FILTER_NAME: 'invert', MIN: 0, MAX: 100, UNITS: '%'},
@@ -27,15 +27,15 @@
   var effectsValue = effectsContainer.querySelector('.effect-level__value');
 
   var getFilter = function () {
-    var effect;
+    var filters;
 
-    for (var i = 0; i < EFFECTS.length; i++) {
-      if (imgElement.className.match(EFFECTS[i].CLASS_NAME)) {
-        effect = EFFECTS[i];
+    for (var i = 0; i < FILTERS.length; i++) {
+      if (imgElement.className.match(FILTERS[i].CLASS_NAME)) {
+        filters = FILTERS[i];
       }
     }
 
-    return effect;
+    return filters;
   };
 
   var getCurrentFilter = function (currentFilter) {
