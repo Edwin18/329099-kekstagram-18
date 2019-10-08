@@ -1,10 +1,10 @@
 'use strict';
 
 (function () {
-  var HASHTAGS_MAX = 20;
-  var HASHTAGS_MAX_LENGTH = 5;
+  var HASHTAGS_LENGTH_MAX = 20;
+  var HASHTAGS_QUANTITY_MAX = 5;
   var HASHTAGS_REGEXP = /#/g;
-  var COMMENTS_MAX = 140;
+  var COMMENTS_LENGTH_MAX = 140;
 
   var uploadFilesElement = document.querySelector('#upload-file');
   var photoFormElement = document.querySelector('.img-upload__overlay');
@@ -15,7 +15,7 @@
   var hashtagsValidation = function () {
     var tempArray = hashtagsElement.value.split(' ');
 
-    if (tempArray.length > HASHTAGS_MAX_LENGTH) {
+    if (tempArray.length > HASHTAGS_QUANTITY_MAX) {
       hashtagsElement.setCustomValidity('Максимум 5 хеш-тегов');
       return;
     }
@@ -26,7 +26,7 @@
       } else {
         hashtagsElement.setCustomValidity('');
 
-        if (tempArray[i].length >= HASHTAGS_MAX) {
+        if (tempArray[i].length >= HASHTAGS_LENGTH_MAX) {
           hashtagsElement.setCustomValidity('Ваш хеш-тег' + tempArray[i] + ' длинее 20 символов, укоротите)');
         } else {
           hashtagsElement.setCustomValidity('');
@@ -36,7 +36,7 @@
   };
 
   var commentsValidation = function () {
-    if (commentsElement.value.length >= COMMENTS_MAX) {
+    if (commentsElement.value.length >= COMMENTS_LENGTH_MAX) {
       commentsElement.setCustomValidity('Слишком длинный комментарий');
     } else {
       commentsElement.setCustomValidity('');
