@@ -13,7 +13,7 @@
   pictureElement.addEventListener('click', function (evt) {
     var picture = evt.target;
 
-    if (picture.tagName === 'IMG') {
+    if (picture.tagName === 'IMG' && picture.closest('.picture')) {
       renderPictureBig(pictureBigElement, picture);
       window.util.showElement(pictureBigElement);
     }

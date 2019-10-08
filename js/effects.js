@@ -98,7 +98,7 @@
     effectsValue.value = VALUE.MAX;
     effectsLevelDepth.style.width = LEFT_POSITION.MAX + '%';
 
-    if (!(imgElement.className.match('effects__preview--') === null)) {
+    if (imgElement.className.match('effects__preview--') !== null) {
       var oldEffects = imgElement.className.match('effects__preview--').input;
       imgElement.classList.remove(oldEffects);
     }
@@ -107,9 +107,9 @@
   var renderEffects = function (evt) {
     var eventTarget = evt.target;
 
-    if (!(eventTarget.value === 'none')) {
+    if (eventTarget.value !== 'none') {
       imgElement.classList.add('effects__preview--' + eventTarget.value);
-      if (!(effectsContainer.classList.contains === 'hiden')) {
+      if (effectsContainer.classList.contains !== 'hidden') {
         window.util.showElement(effectsContainer);
       }
     } else {
