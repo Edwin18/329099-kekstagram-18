@@ -4,19 +4,23 @@
   var successTemplate = document.querySelector('#success').content.querySelector('.success');
   var errorTemplate = document.querySelector('#error').content.querySelector('.error');
   var mainElement = document.querySelector('main');
+  var successElement;
+  var errorElement;
 
   var getSuccess = function () {
-    var successElement = successTemplate.cloneNode(true);
+    var success = successTemplate.cloneNode(true);
 
-    successElement.classList.add('hidden');
-    mainElement.appendChild(successElement);
+    success.classList.add('hidden');
+    mainElement.appendChild(success);
+    successElement = success;
   };
 
   var getError = function () {
-    var errorElement = errorTemplate.cloneNode(true);
+    var error = errorTemplate.cloneNode(true);
 
-    errorElement.classList.add('hidden');
-    mainElement.appendChild(errorElement);
+    error.classList.add('hidden');
+    mainElement.appendChild(error);
+    errorElement = error;
   };
 
   getError();
@@ -24,11 +28,9 @@
 
   window.messages = {
     renderSuccess: function () {
-      var success = document.querySelector('.success');
-
       var onSuccessEscPress = function (evt) {
         if (evt.keyCode === window.constants.KEY_CODE.ESC) {
-          window.util.closePopUp(success, onSuccessEscPress);
+          window.util.closePopUp(successElement, onSuccessEscPress);
         }
       };
 
@@ -36,20 +38,18 @@
         var target = evt.target;
 
         if (target.classList.contains('success__button') || target.classList.contains('success')) {
-          window.util.closePopUp(success, onSuccessEscPress);
-          success.removeEventListener('click', onSuccessClick);
+          window.util.closePopUp(successElement, onSuccessEscPress);
+          successElement.removeEventListener('click', onSuccessClick);
         }
       };
 
-      window.util.openPopUp(success, onSuccessEscPress);
-      success.addEventListener('click', onSuccessClick);
+      window.util.openPopUp(successElement, onSuccessEscPress);
+      successElement.addEventListener('click', onSuccessClick);
     },
     renderError: function () {
-      var error = document.querySelector('.error');
-
       var onErrorEscPress = function (evt) {
         if (evt.keyCode === window.constants.KEY_CODE.ESC) {
-          window.util.closePopUp(error, onErrorEscPress);
+          window.util.closePopUp(errorElement, onErrorEscPress);
         }
       };
 
@@ -57,13 +57,13 @@
         var target = evt.target;
 
         if (target.classList.contains('error__button') || target.classList.contains('error')) {
-          window.util.closePopUp(error, onErrorEscPress);
-          error.removeEventListener('click', onErrorClick);
+          window.util.closePopUp(errorElement, onErrorEscPress);
+          errorElement.removeEventListener('click', onErrorClick);
         }
       };
 
-      window.util.openPopUp(error);
-      error.addEventListener('click', onErrorClick);
+      window.util.openPopUp(errorElement);
+      errorElement.addEventListener('click', onErrorClick);
     }
   };
 })();
