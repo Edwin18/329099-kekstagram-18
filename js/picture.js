@@ -5,14 +5,6 @@
 
   var pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
   var pictureElement = document.querySelector('.pictures');
-  var errorTemplate = document.querySelector('#error').content.querySelector('.error');
-  var mainElement = document.querySelector('main');
-
-  var renderError = function () {
-    var errorElement = errorTemplate.cloneNode(true);
-
-    mainElement.appendChild(errorElement);
-  };
 
   var getPhotoElement = function (photo) {
     var photoElement = pictureTemplate.cloneNode(true);
@@ -35,5 +27,5 @@
     pictureElement.appendChild(fragment);
   };
 
-  window.data.get(URL, renderPhotos, renderError);
+  window.data.get(URL, renderPhotos, window.messages.renderError);
 })();
