@@ -3,6 +3,16 @@
 (function () {
   var STATUS_SUCCESS = 200;
 
+  var onLoadXhr = function (xhr, onSuccess, onError) {
+    xhr.addEventListener('load', function () {
+      if (xhr.status === STATUS_SUCCESS) {
+        onSuccess(xhr.response);
+      } else {
+        onError();
+      }
+    });
+  };
+
   window.data = {
     get: function (url, onSuccess, onError) {
       var xhr = new XMLHttpRequest();
@@ -11,13 +21,7 @@
       xhr.open('GET', url);
       xhr.send();
 
-      xhr.addEventListener('load', function () {
-        if (xhr.status === STATUS_SUCCESS) {
-          onSuccess(xhr.response);
-        } else {
-          onError();
-        }
-      });
+      onLoadXhr(xhr, onSuccess, onError);
     },
     save: function (url, formElement, onSuccess, onError) {
       var xhr = new XMLHttpRequest();
@@ -26,13 +30,7 @@
       xhr.open('POST', url);
       xhr.send(data);
 
-      xhr.addEventListener('load', function () {
-        if (xhr.status === STATUS_SUCCESS) {
-          onSuccess();
-        } else {
-          onError();
-        }
-      });
+      onLoadXhr(xhr, onSuccess, onError);
     }
   };
 })();
