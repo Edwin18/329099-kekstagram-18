@@ -14,10 +14,13 @@
   var commentsElement = photoFormOverlay.querySelector('.text__description');
   var hashtagsElement = photoFormOverlay.querySelector('.text__hashtags');
   var effectsBarElement = photoFormOverlay.querySelector('.img-upload__effect-level');
+  var body = document.querySelector('body');
 
   var onFormEscPress = function (evt) {
     if (evt.keyCode === window.constants.KEY_CODE.ESC) {
       window.util.closePopUp(photoFormOverlay, onFormEscPress);
+      formReset();
+      body.classList.remove('modal-open');
     }
   };
 
@@ -59,6 +62,7 @@
   uploadFilesElement.addEventListener('change', function () {
     window.util.openPopUp(photoFormOverlay, onFormEscPress);
     window.util.hideElement(effectsBarElement);
+    body.classList.add('modal-open');
   });
 
   hashtagsElement.addEventListener('input', hashtagsValidation);
@@ -70,10 +74,13 @@
     window.data.save(URL, photoFormElement, window.messages.renderSuccess, window.messages.renderError);
     window.util.closePopUp(photoFormOverlay, onFormEscPress);
     formReset();
+    body.classList.remove('modal-open');
   });
 
   closeBtnElement.addEventListener('click', function () {
     window.util.closePopUp(photoFormOverlay, onFormEscPress);
+    formReset();
+    body.classList.remove('modal-open');
   });
 
   photoFormOverlay.addEventListener('keydown', function (evt) {
