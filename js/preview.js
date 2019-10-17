@@ -58,6 +58,10 @@
         pictureBigElement.querySelector('.comments-count-start').textContent = i + 1;
 
         fragment.appendChild(commentElement);
+
+        if (i >= picture.comments.length - 1) {
+          window.util.hideElement(commentsLoadBtn);
+        }
       } else {
         window.util.hideElement(commentsLoadBtn);
         pictureBigElement.querySelector('.comments-count-start').textContent = picture.comments.length;

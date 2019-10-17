@@ -1,6 +1,11 @@
 'use strict';
 
 (function () {
+  var ZOOM = {
+    MIN: 25,
+    MAX: 100,
+    STEP: 25
+  };
   var HASHTAGS_LENGTH_MAX = 20;
   var HASHTAGS_QUANTITY_MAX = 5;
   var HASHTAGS_REGEXP = /#/g;
@@ -14,7 +19,36 @@
   var commentsElement = photoFormOverlay.querySelector('.text__description');
   var hashtagsElement = photoFormOverlay.querySelector('.text__hashtags');
   var effectsBarElement = photoFormOverlay.querySelector('.img-upload__effect-level');
+  var zoomScaleElement = photoFormOverlay.querySelector('.img-upload__scale');
+  var zoomBtnValue = photoFormOverlay.querySelector('.scale__control--value');
+  var imgElement = photoFormOverlay.querySelector('.img-upload__preview img');
   var body = document.querySelector('body');
+
+  var getZoom = function (evt) {
+    var target = evt.target;
+
+    if (target.classList.contains('scale__control--smaller')) {
+
+      zoomBtnValue.value = (parseInt(zoomBtnValue.value, 10) - ZOOM.STEP) + '%';
+      imgElement.style.transform = 'scale(0.' + parseInt(zoomBtnValue.value, 10) + ')';
+
+      if (parseInt(zoomBtnValue.value, 10) <= ZOOM.MIN) {
+        zoomBtnValue.value = '25%';
+        imgElement.style.transform = 'scale(0.25)';
+      }
+    }
+
+    if (target.classList.contains('scale__control--bigger')) {
+
+      zoomBtnValue.value = (parseInt(zoomBtnValue.value, 10) + ZOOM.STEP) + '%';
+      imgElement.style.transform = 'scale(0.' + parseInt(zoomBtnValue.value, 10) + ')';
+
+      if (parseInt(zoomBtnValue.value, 10) >= ZOOM.MAX) {
+        zoomBtnValue.value = '100%';
+        imgElement.style.transform = 'scale(1)';
+      }
+    }
+  };
 
   var onFormEscPress = function (evt) {
     if (evt.keyCode === window.constants.KEY_CODE.ESC) {
@@ -63,6 +97,10 @@
     window.util.openPopUp(photoFormOverlay, onFormEscPress);
     window.util.hideElement(effectsBarElement);
     body.classList.add('modal-open');
+  });
+
+  zoomScaleElement.addEventListener('click', function (evt) {
+    getZoom(evt);
   });
 
   hashtagsElement.addEventListener('input', hashtagsValidation);

@@ -13,7 +13,7 @@
     photoElement.querySelector('.picture__img').src = photo.url;
     photoElement.querySelector('.picture__likes').textContent = photo.likes;
     photoElement.querySelector('.picture__comments').textContent = photo.comments.length;
-    photoElement.querySelector('.picture__img').link = photo; // присваиваю ссылку на конкретный объект
+    photoElement.querySelector('.picture__img').link = photo;
 
     return photoElement;
   };
