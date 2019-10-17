@@ -5,6 +5,7 @@
 
   var pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
   var pictureElement = document.querySelector('.pictures');
+  var imgFilterElement = document.querySelector('.img-filters');
 
   var getPhotoElement = function (photo) {
     var photoElement = pictureTemplate.cloneNode(true);
@@ -12,6 +13,7 @@
     photoElement.querySelector('.picture__img').src = photo.url;
     photoElement.querySelector('.picture__likes').textContent = photo.likes;
     photoElement.querySelector('.picture__comments').textContent = photo.comments.length;
+    photoElement.querySelector('.picture__img').link = photo;
 
     return photoElement;
   };
@@ -27,5 +29,15 @@
     pictureElement.appendChild(fragment);
   };
 
-  window.data.get(URL, renderPhotos, window.messages.renderError);
+  var getPhotos = function (photos) {
+    renderPhotos(photos);
+    imgFilterElement.classList.remove('img-filters--inactive');
+
+    window.picture = {
+      photos: photos,
+      renderPhotos: renderPhotos
+    };
+  };
+
+  window.data.get(URL, getPhotos, window.messages.renderError);
 })();

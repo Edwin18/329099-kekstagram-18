@@ -46,7 +46,7 @@
                   <!-- Изменение размера изображения -->
                   <fieldset class="img-upload__scale  scale">
                     <button type="button" class="scale__control  scale__control--smaller">Уменьшить</button>
-                    <input type="text" class="scale__control  scale__control--value" value="55%" title="Image Scale" name="scale" readonly>
+                    <input type="text" class="scale__control  scale__control--value" value="100%" title="Image Scale" name="scale" readonly>
                     <button type="button" class="scale__control  scale__control--bigger">Увеличить</button>
                   </fieldset>
 
@@ -153,16 +153,8 @@
           </div>
 
           <!-- Комментарии к изображению -->
-          <div class="social__comment-count">5 из <span class="comments-count">125</span> комментариев</div>
+          <div class="social__comment-count"><span class="comments-count-start">5</span> из <span class="comments-count-end">125</span> комментариев</div>
           <ul class="social__comments">
-            <li class="social__comment">
-              <img class="social__picture" src="img/avatar-4.svg" alt="Аватар комментатора фотографии" width="35" height="35">
-              <p class="social__text">Мега фото! Просто обалдеть. Как вам так удалось?</p>
-            </li>
-            <li class="social__comment">
-              <img class="social__picture" src="img/avatar-3.svg" alt="Аватар комментатора фотографии" width="35" height="35">
-               <p class="social__text">Да это фоташоп!!!!!!!!</p>
-            </li>
           </ul>
 
           <!-- Кнопка для загрузки новой порции комментариев -->
@@ -242,6 +234,8 @@
   <script src="js/messages.js"></script>
   <script src="js/picture.js"></script>
   <script src="js/preview.js"></script>
+  <script src="js/sort.js"></script>
+  <script src="js/debounce.js"></script>
   <script src="js/form.js"></script>
   <script src="js/effects.js"></script>
 </body>
