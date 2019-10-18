@@ -16,6 +16,7 @@
   var HASHTAGS_REGEXP = /#/g;
   var COMMENTS_LENGTH_MAX = 140;
   var URL = 'https://js.dump.academy/kekstagram';
+  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
   var uploadFilesElement = document.querySelector('#upload-file');
   var photoFormElement = document.querySelector('#upload-select-image');
@@ -27,7 +28,33 @@
   var zoomScaleElement = photoFormOverlay.querySelector('.img-upload__scale');
   var zoomBtnValue = photoFormOverlay.querySelector('.scale__control--value');
   var imgElement = photoFormOverlay.querySelector('.img-upload__preview img');
+  var effectsPreview = photoFormOverlay.querySelectorAll('.effects__preview');
   var body = document.querySelector('body');
+
+  var getUploadedPhoto = function () {
+    var file = uploadFilesElement.files[0];
+    if (file) {
+      var fileName = file.name.toLowerCase();
+
+      var matches = FILE_TYPES.some(function (elem) {
+        return fileName.endsWith(elem);
+      });
+
+      if (matches) {
+        var reader = new FileReader();
+
+        reader.addEventListener('load', function () {
+          imgElement.src = reader.result;
+
+          effectsPreview.forEach(function (elem) {
+            elem.style.backgroundImage = 'url(' + reader.result + ')';
+          });
+        });
+
+        reader.readAsDataURL(file);
+      }
+    }
+  };
 
   var getZoom = function (evt) {
     var target = evt.target;
@@ -149,4 +176,6 @@
       evt.stopPropagation();
     }
   });
+
+  uploadFilesElement.addEventListener('change', getUploadedPhoto);
 })();
