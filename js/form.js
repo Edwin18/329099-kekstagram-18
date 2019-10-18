@@ -6,8 +6,13 @@
     MAX: 100,
     STEP: 25
   };
-  var HASHTAGS_LENGTH_MAX = 20;
-  var HASHTAGS_QUANTITY_MAX = 5;
+  var HASHTAGS = {
+    LENGTH: {
+      MIN: 1,
+      MAX: 20
+    },
+    QUANTITY_MAX: 5
+  };
   var HASHTAGS_REGEXP = /#/g;
   var COMMENTS_LENGTH_MAX = 140;
   var URL = 'https://js.dump.academy/kekstagram';
@@ -63,21 +68,37 @@
   };
 
   var hashtagsValidation = function () {
-    var tempArray = hashtagsElement.value.split(' ');
+    var hashtags = hashtagsElement.value.split(' ')
+      .map(function (elem) {
+        return elem.toLowerCase();
+      })
+      .filter(function (elem) {
+        return elem !== '';
+      });
 
-    if (tempArray.length > HASHTAGS_QUANTITY_MAX) {
-      hashtagsElement.setCustomValidity('Максимум 5 хэш-тегов');
+    if (hashtags.length > HASHTAGS.QUANTITY_MAX) {
+      hashtagsElement.setCustomValidity('Не более ' + HASHTAGS.QUANTITY_MAX + ' хэш-тегов');
       return;
     }
 
-    for (var i = 0; i < tempArray.length; i++) {
-      if (tempArray[i].match(HASHTAGS_REGEXP) === null) {
-        hashtagsElement.setCustomValidity('Вы забыли поставить хэш-тег #');
+    for (var i = 0; i < hashtags.length; i++) {
+      var firstToken = hashtags[i][0];
+      var inkr = i + 1;
+
+      if (hashtags[i].match(HASHTAGS_REGEXP) === null) {
+        hashtagsElement.setCustomValidity('Вы забыли поставить символ хэш-тега "#"');
       } else {
         hashtagsElement.setCustomValidity('');
 
-        if (tempArray[i].length >= HASHTAGS_LENGTH_MAX) {
-          hashtagsElement.setCustomValidity('Ваш хэш-тег' + tempArray[i] + ' длинее 20 символов, укоротите)');
+        if (hashtags[i].length >= HASHTAGS.LENGTH.MAX) {
+          hashtagsElement.setCustomValidity('Ваш хэш-тег' + hashtags[i] + ' длинее 20 символов, укоротите)');
+        } else if (firstToken === '#' && hashtags[i].includes('#', 1)) {
+          hashtagsElement.setCustomValidity('Между хэш-тегами ' + hashtags[i] + ' отсутствует пробел');
+        } else if (firstToken === '#' && hashtags[i].length === HASHTAGS.LENGTH.MIN) {
+          hashtagsElement.setCustomValidity('Хэш-тег не может состоять только из символа "#"');
+        } else if (hashtags.indexOf(hashtags[i], inkr) !== -1) {
+          hashtagsElement.setCustomValidity('Ваш хэш-тег ' + hashtags[i] + ' повторяется');
+          return;
         } else {
           hashtagsElement.setCustomValidity('');
         }
