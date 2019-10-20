@@ -40,7 +40,7 @@
   };
 
   var getFilterDiscussed = function (mostDiscussed) {
-    var photos = mostDiscussed.slice();
+    var photos = mostDiscussed.slice(0);
 
     photos.sort(function (a, b) {
       return b.comments.length - a.comments.length;

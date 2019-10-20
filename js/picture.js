@@ -3,12 +3,12 @@
 (function () {
   var URL = 'https://js.dump.academy/kekstagram/data';
 
-  var pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
+  var pictureTemplateElement = document.querySelector('#picture').content.querySelector('.picture');
   var pictureElement = document.querySelector('.pictures');
   var imgFilterElement = document.querySelector('.img-filters');
 
   var getPhotoElement = function (photo) {
-    var photoElement = pictureTemplate.cloneNode(true);
+    var photoElement = pictureTemplateElement.cloneNode(true);
 
     photoElement.querySelector('.picture__img').src = photo.url;
     photoElement.querySelector('.picture__likes').textContent = photo.likes;

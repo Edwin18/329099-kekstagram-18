@@ -1,14 +1,14 @@
 'use strict';
 
 (function () {
-  var successTemplate = document.querySelector('#success').content.querySelector('.success');
-  var errorTemplate = document.querySelector('#error').content.querySelector('.error');
+  var successTemplateElement = document.querySelector('#success').content.querySelector('.success');
+  var errorTemplateElement = document.querySelector('#error').content.querySelector('.error');
   var mainElement = document.querySelector('main');
   var successElement;
   var errorElement;
 
   var getSuccess = function () {
-    var success = successTemplate.cloneNode(true);
+    var success = successTemplateElement.cloneNode(true);
 
     success.classList.add('hidden');
     mainElement.appendChild(success);
@@ -16,7 +16,7 @@
   };
 
   var getError = function () {
-    var error = errorTemplate.cloneNode(true);
+    var error = errorTemplateElement.cloneNode(true);
 
     error.classList.add('hidden');
     mainElement.appendChild(error);

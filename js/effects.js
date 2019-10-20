@@ -20,11 +20,11 @@
 
   var imgElement = document.querySelector('.img-upload__preview img');
   var effectsListElement = document.querySelector('.effects__list');
-  var effectsContainer = document.querySelector('.img-upload__effect-level');
-  var effectsHandler = effectsContainer.querySelector('.effect-level__pin');
-  var effectsBar = effectsContainer.querySelector('.effect-level__line');
-  var effectsLevelDepth = effectsContainer.querySelector('.effect-level__depth');
-  var effectsValue = effectsContainer.querySelector('.effect-level__value');
+  var effectsContainerElement = document.querySelector('.img-upload__effect-level');
+  var effectsHandlerElement = effectsContainerElement.querySelector('.effect-level__pin');
+  var effectsBarElement = effectsContainerElement.querySelector('.effect-level__line');
+  var effectsLevelDepthElement = effectsContainerElement.querySelector('.effect-level__depth');
+  var effectsValueElement = effectsContainerElement.querySelector('.effect-level__value');
 
   var getFilter = function () {
     var filters;
@@ -39,7 +39,7 @@
   };
 
   var getCurrentFilter = function (currentFilter) {
-    var pureProportion = getPureProportion(currentFilter.MAX, currentFilter.MIN) * effectsValue.value;
+    var pureProportion = getPureProportion(currentFilter.MAX, currentFilter.MIN) * effectsValueElement.value;
     var firstFilterValue = currentFilter.MIN + pureProportion;
     return currentFilter.FILTER_NAME + '(' + firstFilterValue + currentFilter.UNITS + ')';
   };
@@ -48,12 +48,12 @@
     return (maxValue - minValue) / PERCENT;
   };
 
-  effectsHandler.addEventListener('mousedown', function (evt) {
+  effectsHandlerElement.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
     var startCoords = evt.clientX;
-    var startCoordsHangler = effectsHandler.offsetLeft;
-    var sliderWidth = effectsBar.offsetWidth;
+    var startCoordsHangler = effectsHandlerElement.offsetLeft;
+    var sliderWidth = effectsBarElement.offsetWidth;
     var pureProportion = sliderWidth / PERCENT;
     var currentFilter = getFilter();
 
@@ -62,20 +62,20 @@
 
       var shift = startCoords - moveEvt.clientX;
 
-      effectsHandler.style.left = (startCoordsHangler - shift) + 'px';
-      effectsValue.value = Math.round(effectsHandler.offsetLeft / pureProportion);
-      effectsLevelDepth.style.width = effectsValue.value + '%';
+      effectsHandlerElement.style.left = (startCoordsHangler - shift) + 'px';
+      effectsValueElement.value = Math.round(effectsHandlerElement.offsetLeft / pureProportion);
+      effectsLevelDepthElement.style.width = effectsValueElement.value + '%';
 
-      if (effectsHandler.offsetLeft <= 0) {
-        effectsHandler.style.left = LEFT_POSITION.MIN;
-        effectsValue.value = VALUE.MIN;
-        effectsLevelDepth.style.width = LEFT_POSITION.MIN;
+      if (effectsHandlerElement.offsetLeft <= 0) {
+        effectsHandlerElement.style.left = LEFT_POSITION.MIN;
+        effectsValueElement.value = VALUE.MIN;
+        effectsLevelDepthElement.style.width = LEFT_POSITION.MIN;
       }
 
-      if (effectsHandler.offsetLeft > sliderWidth) {
-        effectsHandler.style.left = sliderWidth + 'px';
-        effectsValue.value = VALUE.MAX;
-        effectsLevelDepth.style.width = LEFT_POSITION.MAX + '%';
+      if (effectsHandlerElement.offsetLeft > sliderWidth) {
+        effectsHandlerElement.style.left = sliderWidth + 'px';
+        effectsValueElement.value = VALUE.MAX;
+        effectsLevelDepthElement.style.width = LEFT_POSITION.MAX + '%';
       }
 
       imgElement.style.filter = getCurrentFilter(currentFilter);
@@ -94,9 +94,9 @@
 
   var removeEffects = function () {
     imgElement.style.filter = null;
-    effectsHandler.style.left = LEFT_POSITION.MAX + '%';
-    effectsValue.value = VALUE.MAX;
-    effectsLevelDepth.style.width = LEFT_POSITION.MAX + '%';
+    effectsHandlerElement.style.left = LEFT_POSITION.MAX + '%';
+    effectsValueElement.value = VALUE.MAX;
+    effectsLevelDepthElement.style.width = LEFT_POSITION.MAX + '%';
 
     if (imgElement.className.match('effects__preview--') !== null) {
       var oldEffects = imgElement.className.match('effects__preview--').input;
@@ -109,11 +109,11 @@
 
     if (eventTarget.value !== 'none') {
       imgElement.classList.add('effects__preview--' + eventTarget.value);
-      if (effectsContainer.classList.contains !== 'hidden') {
-        window.util.showElement(effectsContainer);
+      if (effectsContainerElement.classList.contains !== 'hidden') {
+        window.util.showElement(effectsContainerElement);
       }
     } else {
-      window.util.hideElement(effectsContainer);
+      window.util.hideElement(effectsContainerElement);
     }
   };
 
