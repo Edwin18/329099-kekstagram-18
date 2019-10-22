@@ -27,15 +27,15 @@
   var effectsValueElement = effectsContainerElement.querySelector('.effect-level__value');
 
   var getFilter = function () {
-    var filters;
+    var filter;
 
-    for (var i = 0; i < FILTERS.length; i++) {
-      if (imgElement.className.match(FILTERS[i].CLASS_NAME)) {
-        filters = FILTERS[i];
+    FILTERS.forEach(function (elem) {
+      if (imgElement.className.match(elem.CLASS_NAME)) {
+        filter = elem;
       }
-    }
+    });
 
-    return filters;
+    return filter;
   };
 
   var getCurrentFilter = function (currentFilter) {
@@ -52,7 +52,7 @@
     evt.preventDefault();
 
     var startCoords = evt.clientX;
-    var startCoordsHangler = effectsHandlerElement.offsetLeft;
+    var startCoordsHandler = effectsHandlerElement.offsetLeft;
     var sliderWidth = effectsBarElement.offsetWidth;
     var pureProportion = sliderWidth / PERCENT;
     var currentFilter = getFilter();
@@ -62,7 +62,7 @@
 
       var shift = startCoords - moveEvt.clientX;
 
-      effectsHandlerElement.style.left = (startCoordsHangler - shift) + 'px';
+      effectsHandlerElement.style.left = (startCoordsHandler - shift) + 'px';
       effectsValueElement.value = Math.round(effectsHandlerElement.offsetLeft / pureProportion);
       effectsLevelDepthElement.style.width = effectsValueElement.value + '%';
 

@@ -13,7 +13,6 @@
     },
     COUNT_MAX: 5
   };
-  var COMMENTS_LENGTH_MAX = 140;
   var URL = 'https://js.dump.academy/kekstagram';
   var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
@@ -21,7 +20,6 @@
   var photoFormElement = document.querySelector('#upload-select-image');
   var photoFormOverlayElement = document.querySelector('.img-upload__overlay');
   var closeBtnElement = photoFormOverlayElement.querySelector('#upload-cancel');
-  var commentsElement = photoFormOverlayElement.querySelector('.text__description');
   var hashtagsElement = photoFormOverlayElement.querySelector('.text__hashtags');
   var effectsBarElement = photoFormOverlayElement.querySelector('.img-upload__effect-level');
   var zoomScaleElement = photoFormOverlayElement.querySelector('.img-upload__scale');
@@ -30,7 +28,7 @@
   var effectsPreviewElement = photoFormOverlayElement.querySelectorAll('.effects__preview');
   var bodyElement = document.querySelector('body');
 
-  var getUploadedPhoto = function () {
+  var onUploadPhotoSubmit = function () {
     var file = uploadFilesElement.files[0];
     if (file) {
       var fileName = file.name.toLowerCase();
@@ -91,6 +89,8 @@
 
   var formReset = function () {
     photoFormElement.reset();
+    imgElement.style.filter = 'none';
+    imgElement.style.transform = 'none';
   };
 
   var getHashtags = function () {
@@ -136,7 +136,7 @@
     for (var i = 0; i < tags.length - 1; i++) {
       for (var k = i + 1; k < tags.length; k++) {
         if (tags[i].toLowerCase() === tags[k].toLowerCase()) {
-          hashtagsElement.setCustomValidity('Ваши хэш-теги ' + tags[i] + ' и ' + tags[k] + ' одинаковые.');
+          hashtagsElement.setCustomValidity('Ваши хэш-теги ' + '"' + tags[i] + '"' + ' и ' + '"' + tags[k] + '"' + ' одинаковые.');
         }
       }
     }
@@ -160,14 +160,6 @@
     validateDuplicate(tags);
   };
 
-  var commentsValidation = function () {
-    if (commentsElement.value.length >= COMMENTS_LENGTH_MAX) {
-      commentsElement.setCustomValidity('Слишком длинный комментарий');
-    } else {
-      resetValidityError();
-    }
-  };
-
   uploadFilesElement.addEventListener('change', function () {
     window.util.openPopUp(photoFormOverlayElement, onFormEscPress);
     window.util.hideElement(effectsBarElement);
@@ -182,8 +174,6 @@
     var tags = getHashtags();
     validateTags(tags);
   });
-
-  commentsElement.addEventListener('input', commentsValidation);
 
   photoFormElement.addEventListener('submit', function (evt) {
     evt.preventDefault();
@@ -207,5 +197,5 @@
     }
   });
 
-  uploadFilesElement.addEventListener('change', getUploadedPhoto);
+  uploadFilesElement.addEventListener('change', onUploadPhotoSubmit);
 })();

@@ -6,7 +6,7 @@
 
   var pictureElement = document.querySelector('.pictures');
   var pictureBigElement = document.querySelector('.big-picture');
-  var сloseBtnElement = pictureBigElement.querySelector('#picture-cancel');
+  var closeBtnElement = pictureBigElement.querySelector('#picture-cancel');
   var commentsContainerElement = pictureBigElement.querySelector('.social__comments');
   var commentsLoadBtnElement = pictureBigElement.querySelector('.comments-loader');
   var bodyElement = document.querySelector('body');
@@ -113,7 +113,7 @@
     }
   });
 
-  сloseBtnElement.addEventListener('click', function () {
+  closeBtnElement.addEventListener('click', function () {
     window.util.closePopUp(pictureBigElement, onPictureEscPress);
     bodyElement.classList.remove('modal-open');
   });

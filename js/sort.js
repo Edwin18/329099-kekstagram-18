@@ -5,21 +5,21 @@
   var lastTimeout;
 
   var clearPicture = function () {
-    var photo = Array.from(document.querySelectorAll('.picture'));
+    var photo = document.querySelectorAll('.picture');
 
-    for (var i = 1; i <= photo.length; i++) {
-      photo[photo.length - i].parentNode.removeChild(photo[photo.length - i]);
-    }
+    photo.forEach(function (elem) {
+      elem.parentNode.removeChild(elem);
+    });
   };
 
   var clearBtn = function () {
     var btns = document.querySelectorAll('.img-filters__button');
 
-    for (var i = 0; i < btns.length; i++) {
-      if (btns[i].classList.contains('img-filters__button--active')) {
-        btns[i].classList.remove('img-filters__button--active');
+    btns.forEach(function (elem) {
+      if (elem.classList.contains('img-filters__button--active')) {
+        elem.classList.remove('img-filters__button--active');
       }
-    }
+    });
   };
 
   var getRandomArray = function (arr, size) {

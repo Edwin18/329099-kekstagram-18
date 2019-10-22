@@ -21,10 +21,10 @@
   var renderPhotos = function (photos) {
     var fragment = document.createDocumentFragment();
 
-    for (var i = 0; i < photos.length; i++) {
-      var template = getPhotoElement(photos[i]);
+    photos.forEach(function (elem) {
+      var template = getPhotoElement(elem);
       fragment.appendChild(template);
-    }
+    });
 
     pictureElement.appendChild(fragment);
   };
